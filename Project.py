@@ -21,6 +21,7 @@ def show_points():
     initializing_points_file = open('initializing_points.txt', 'r')
     data_set = initializing_points_file.read()
     print(data_set)
+    return 1
 
 
 def initializing_paths():
@@ -146,7 +147,7 @@ def sort_clean_up():
         data_dict[data_length] = data_id
     for key in sorted(data_dict):
         data_list.append("%s:%s" % (key, data_dict[key]))
-    for i in range(0, 501):
+    for i in range(0, 502):
         cleaned_paths_file.writelines(str(data_list[i]) + "\n")
     top_path_founded_file.writelines(str(data_list[0]))
 
@@ -163,7 +164,7 @@ def top_paths_founded():
     top_paths_founded_file = open('top_paths_founded.txt', 'w')
     top_paths_founded_file.write("")
     cleaned_paths_file = open('cleaned_paths.txt', 'r')
-    for i in range(0, 501):
+    for i in range(0, 502):
         path_id_1 = str(str(cleaned_paths_file.readline().split("\n")).split(",")[0].split(":")[1])
         path_id_2 = str(path_id_1)[:len(path_id_1) - 1]
         path_data = found_path(path_id_2)
@@ -192,9 +193,9 @@ def syncing():
     top_paths_founded_file = open('top_paths_founded.txt', 'r')
     syncing_file = open('syncing.txt', 'a')
     a = []
-    for i in range(0, 501):
+    for i in range(0, 502):
         a.append(str(top_paths_founded_file.readline()))
-    for j in range(0, 500):
+    for j in range(0, 501):
         b = str(
             a[j].split("\n")[0] + a[j + 1].split("\n")[0] + "\n" + a[j].split("\n")[0] + a[j + 1].split("\n")[0] + "\n")
         syncing_file.write(b)
@@ -220,7 +221,7 @@ def clear_brackets():
     syncing_file = open('syncing.txt', 'r')
     a = syncing_file.read()
     b = ""
-    for i in range(0, len(a)-1):
+    for i in range(0, len(a) - 1):
         if a[i] == "[" or a[i] == "]" or a[i] == " ":
             pass
         else:
@@ -229,11 +230,44 @@ def clear_brackets():
     cleared_brackets_file.write(b)
 
 
+def gen_creation():
+    second_generator_clear_file = open('second_generator.txt', 'w')
+    second_generator_clear_file.write("")
+    second_generator_file = open('second_generator.txt', 'a')
+    syncing_file = open('syncing.txt', 'r')
+    a = []
+    for i_1 in range(0, 998):
+        if i_1 % 2 == 1:
+            pass
+        else:
+            a_1 = []
+            a_2 = []
+            line_4 = []
+            line_5 = []
+            line_6 = []
+            line_7 = []
+            for i in range(0, 502):
+                a.append(syncing_file.readline().split("\n"))
+            a_1.append(str(a[i_1][0]).split(","))
+            a_2.append(str(a[i_1 + 2][0]).split(","))
+            for j in range(0, 16):
+                line_4.append(a_1[0][j])
+            for k in range(0, 14):
+                line_5.append(a_2[0][k])
+            for l in range(16, 30):
+                line_6.append(a_1[0][l])
+            for m in range(14, 30):
+                line_7.append(a_2[0][m])
+            second_generator_file.writelines(str(i_1) + ")" + str(line_4 + line_5) + "\n")
+            second_generator_file.writelines(str(i_1 + 1) + ")" + str(line_6 + line_7) + "\n")
+            i_1 = i_1 + 2
+
+
 if __name__ == '__main__':
-    replacement(2)
+    gen_creation()
     while True:
         chose_number = int(
-            input("1)set points\n2)show points\n3)set path\n4)show paths\n5)start\n==>"))
+            input("1)set points\n2)show points\n3)set path\n4)show paths\n5)start\n6)new generation\n==>"))
         if chose_number == 1:
             initializing_points()
         elif chose_number == 2:
@@ -251,3 +285,5 @@ if __name__ == '__main__':
             replacement(1)
             clear_brackets()
             replacement(2)
+        elif chose_number == 6:
+            gen_creation()
