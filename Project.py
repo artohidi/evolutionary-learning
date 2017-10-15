@@ -103,8 +103,8 @@ def set_path_length():
         paths_length_file.write(str(i + 1) + ":" + str(l) + "\n")
 
 
-test_path = [[7], [26], [8], [19], [16], [1], [10], [23], [13], [27], [30], [17], [12], [2], [9], [18], [25], [28],
-             [11], [29], [24], [4], [22], [21], [20], [5], [6], [15], [3], [14]]
+test_path = [[30], [11], [25], [3], [13], [10], [17], [6], [27], [20], [24], [29], [26], [2], [1], [5], [15], [7],
+             [8], [12], [9], [28], [14], [16], [18], [19], [23], [4], [21], [22]]
 
 
 def test_length():
@@ -141,14 +141,22 @@ def found_path(path_id):
 
 
 def top_paths_founded():
+    top_paths_founded_clear_file = open('top_paths_founded.txt', 'w')
+    top_paths_founded_clear_file.write("")
     top_paths_founded_file = open('top_paths_founded.txt', 'w')
-    top_paths_founded_file.write("")
     cleaned_paths_file = open('cleaned_paths.txt', 'r')
     for i in range(0, 502):
         path_id_1 = str(str(cleaned_paths_file.readline().split("\n")).split(",")[0].split(":")[1])
         path_id_2 = str(path_id_1)[:len(path_id_1) - 1]
         path_data = found_path(path_id_2)
         top_paths_founded_file.writelines(str(path_id_2) + ":" + str(path_data))
+
+
+def initial_path_set():
+    initial_path_set_file = open('top_paths_founded.txt', 'r')
+    a = initial_path_set_file.readline()
+    top_paths_history_file = open('top_paths_history.txt', 'a')
+    top_paths_history_file.writelines(str(a))
 
 
 def syncing_edition():
@@ -320,6 +328,7 @@ def sort_clean_up_generation():
     cleaned_paths_clear_file.write("")
     second_generator_file = open('second_generator.txt', 'r')
     top_path_founded_read_file = open('top_path_founded.txt', 'r')
+    best_path_file = open('top_paths_history.txt', 'a')
     a_0 = top_path_founded_read_file.read()
     a_1 = a_0.split(":")[0]
     data_set = second_generator_file.read()
@@ -331,37 +340,51 @@ def sort_clean_up_generation():
         data_dict[str(d)] = str(b)
     for key in sorted(data_dict):
         data_list.append("%s:%s" % (key, data_dict[key]))
+    number = int(str(data_list[0]).split(":")[1])
     cleaned_paths_file = open('cleaned_paths.txt', 'a')
     for i_12 in range(0, 502):
         cleaned_paths_file.writelines(str(data_list[i_12]) + "\n")
     new_min = data_list[0].split(":")[0]
     a = float(a_1) - float(new_min)
-    if a >= 0:
+    if a > 0:
         top_path_founded_clear_file = open('top_path_founded.txt', 'w')
         top_path_founded_clear_file.write("")
         top_path_founded_write_file = open('top_path_founded.txt', 'w')
         top_path_founded_write_file.write(data_list[0])
+        best_path_file.writelines(str(data_set.split("\n")[number - 1] + "\n"))
         print("new top!")
+    else:
+        print("no changes")
 
 
 if __name__ == '__main__':
-    sort_clean_up_generation()
     while True:
         chose_number = int(
             input(
                 "1)set points\n2)show points\n3)set path\n4)show paths\n5)start\n6)new generation\n7)show top\n==>"))
         if chose_number == 1:
+            top_paths_history_file = open('top_paths_history.txt', 'w')
+            top_paths_history_file.write("")
             initializing_points()
         elif chose_number == 2:
+            top_paths_history_file = open('top_paths_history.txt', 'w')
+            top_paths_history_file.write("")
             show_points()
         elif chose_number == 3:
+            top_paths_history_file = open('top_paths_history.txt', 'w')
+            top_paths_history_file.write("")
             initializing_paths()
         elif chose_number == 4:
+            top_paths_history_file = open('top_paths_history.txt', 'w')
+            top_paths_history_file.write("")
             show_paths()
         elif chose_number == 5:
+            top_paths_history_file = open('top_paths_history.txt', 'w')
+            top_paths_history_file.write("")
             set_path_length()
             sort_clean_up()
             top_paths_founded()
+            initial_path_set()
             syncing()
             syncing_edition()
             replacement(1)
@@ -369,6 +392,7 @@ if __name__ == '__main__':
             replacement(2)
         elif chose_number == 6:
             for i in range(0, 10):
+                print(str(10 * i) + "% finished")
                 gen_generation()
                 sort_clean_up_generation()
                 top_paths_founded()
