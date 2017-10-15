@@ -1,5 +1,7 @@
 import random
 
+total = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+
 
 # size of the space is 100*100 and presented in integer form.
 
@@ -14,14 +16,12 @@ def initializing_points():
         data_set = {'id': i, "x": num_1[0], "y": num_2[0]}
         initializing_points_file = open('initializing_points.txt', 'a')
         initializing_points_file.write(str(data_set) + '\n')
-    input("*** done ***")
 
 
 def show_points():
     initializing_points_file = open('initializing_points.txt', 'r')
     data_set = initializing_points_file.read()
     print(data_set)
-    return 1
 
 
 def initializing_paths():
@@ -40,7 +40,6 @@ def initializing_paths():
                 data_set.append(num_1)
         initializing_paths_file = open('initializing_paths.txt', 'a')
         initializing_paths_file.write("{}){}\n".format(i + 1, data_set))
-    input("*** done ***")
 
 
 def show_paths():
@@ -78,6 +77,7 @@ def set_path_length():
     paths_length_file = open('paths_length.txt', 'w')
     paths_length_file.write("")
     initializing_paths_file = open('initializing_paths.txt', 'r')
+    paths_length_file = open('paths_length.txt', 'a')
     data_set = initializing_paths_file.read()
     for i in range(0, 1001):
         data = data_set.split("\n")[i]
@@ -100,7 +100,6 @@ def set_path_length():
             elif len(c_2) == 3:
                 c_2 = c_2[:2]
             l = l + set_length(int(c_1), int(c_2))
-        paths_length_file = open('paths_length.txt', 'a')
         paths_length_file.write(str(i + 1) + ":" + str(l) + "\n")
 
 
@@ -133,25 +132,6 @@ def test_length():
     input(l)
 
 
-def sort_clean_up():
-    cleaned_paths_file = open('cleaned_paths.txt', 'w')
-    cleaned_paths_file.write("")
-    paths_length_file = open('paths_length.txt', 'r')
-    top_path_founded_file = open('top_path_founded.txt', 'a')
-    cleaned_paths_file = open('cleaned_paths.txt', 'a')
-    data_set = paths_length_file.read()
-    data_dict = {}
-    data_list = []
-    for i in range(0, 1000):
-        data_id, data_length = (data_set.split("\n")[i]).split(":")
-        data_dict[data_length] = data_id
-    for key in sorted(data_dict):
-        data_list.append("%s:%s" % (key, data_dict[key]))
-    for i in range(0, 502):
-        cleaned_paths_file.writelines(str(data_list[i]) + "\n")
-    top_path_founded_file.writelines(str(data_list[0]))
-
-
 def found_path(path_id):
     initializing_paths_file = open('initializing_paths.txt', 'r')
     for i in range(1, 1001):
@@ -176,7 +156,7 @@ def syncing_edition():
     syncing_edition_write_file = open('syncing_edition.txt', 'w')
     syncing_edition_write_file.write("")
     syncing_edition_add_file = open('syncing_edition.txt', 'a')
-    for i in range(0, 1000):
+    for i in range(0, 1002):
         data_1 = syncing_founded_file.readline().split("\n")
         data_2, data_3, data_4 = str(data_1).split("]]")
         data_21 = str(data_2).split(":[")[1]
@@ -230,14 +210,14 @@ def clear_brackets():
     cleared_brackets_file.write(b)
 
 
-def gen_creation():
+def gen_generation():
     second_generator_clear_file = open('second_generator.txt', 'w')
     second_generator_clear_file.write("")
     second_generator_file = open('second_generator.txt', 'a')
     syncing_file = open('syncing.txt', 'r')
     a = []
-    for i_1 in range(0, 998):
-        if i_1 % 2 == 1:
+    for i_1 in range(1, 1001):
+        if i_1 % 2 == 0:
             pass
         else:
             a_1 = []
@@ -246,28 +226,130 @@ def gen_creation():
             line_5 = []
             line_6 = []
             line_7 = []
-            for i in range(0, 502):
+            for i in range(0, 500):
                 a.append(syncing_file.readline().split("\n"))
             a_1.append(str(a[i_1][0]).split(","))
+
             a_2.append(str(a[i_1 + 2][0]).split(","))
             for j in range(0, 16):
-                line_4.append(a_1[0][j])
+                line_4.append(int(a_1[0][j]))
             for k in range(0, 14):
-                line_5.append(a_2[0][k])
+                line_5.append(int(a_2[0][k]))
             for l in range(16, 30):
-                line_6.append(a_1[0][l])
+                line_6.append(int(a_1[0][l]))
             for m in range(14, 30):
-                line_7.append(a_2[0][m])
-            second_generator_file.writelines(str(i_1) + ")" + str(line_4 + line_5) + "\n")
-            second_generator_file.writelines(str(i_1 + 1) + ")" + str(line_6 + line_7) + "\n")
+                line_7.append(int(a_2[0][m]))
+            a_3 = line_4 + line_5
+            aa = []
+            b_3 = line_6 + line_7
+            bb = []
+            data_set_1 = []
+            data_set_2 = []
+            for i_2 in range(0, len(total)):
+                data = int(total[i_2])
+                if data in a_3:
+                    pass
+                else:
+                    data_set_1.append(data)
+            for i_3 in range(0, len(a_3)):
+                if len(aa) == 0:
+                    aa.append(int(a_3[i_3]))
+                else:
+                    if a_3[i_3] in aa:
+                        aa.append(int(data_set_1[0]))
+                        data_set_1 = data_set_1[1:]
+                    else:
+                        aa.append(int(a_3[i_3]))
+            for i_4 in range(0, len(total)):
+                data = int(total[i_4])
+                if data in b_3:
+                    pass
+                else:
+                    data_set_2.append(data)
+            for i_5 in range(0, len(b_3)):
+                if len(bb) == 0:
+                    bb.append(int(b_3[i_5]))
+                else:
+                    if b_3[i_5] in bb:
+                        bb.append(int(data_set_2[0]))
+                        data_set_2 = data_set_2[1:]
+                    else:
+                        bb.append(int(b_3[i_5]))
+            a_4 = set_path_generated_length(aa)
+            a_5 = set_path_generated_length(bb)
+            second_generator_file.writelines(
+                str(i_1) + str(aa) + "[" + str(a_4) + "\n" + str(i_1 + 1) + str(bb) + "[" + str(a_5) + "\n")
             i_1 = i_1 + 2
 
 
+def show_top():
+    top_path_founded_file = open('top_path_founded.txt', 'r')
+    print(top_path_founded_file.readline())
+
+
+def set_path_generated_length(data_set_get):
+    l = 0
+    for i in range(0, 29):
+        a = data_set_get[i]
+        b = data_set_get[i + 1]
+        l = l + set_length(a, b)
+    return l
+
+
+def sort_clean_up():
+    cleaned_paths_file = open('cleaned_paths.txt', 'w')
+    cleaned_paths_file.write("")
+    cleaned_paths_file = open('cleaned_paths.txt', 'a')
+    paths_length_file = open('paths_length.txt', 'r')
+    top_path_founded_file = open('top_path_founded.txt', 'w')
+    data_set = paths_length_file.read()
+    data_dict = {}
+    data_list = []
+    for i in range(0, 1000):
+        data_id, data_length = (data_set.split("\n")[i]).split(":")
+        data_dict[data_length] = data_id
+    for key in sorted(data_dict):
+        data_list.append("%s:%s" % (key, data_dict[key]))
+    for i_2 in range(0, 502):
+        cleaned_paths_file.writelines(str(data_list[i_2]) + "\n")
+    top_path_founded_file.writelines(str(data_list[0]))
+
+
+def sort_clean_up_generation():
+    cleaned_paths_clear_file = open('cleaned_paths.txt', 'w')
+    cleaned_paths_clear_file.write("")
+    second_generator_file = open('second_generator.txt', 'r')
+    top_path_founded_read_file = open('top_path_founded.txt', 'r')
+    a_0 = top_path_founded_read_file.read()
+    a_1 = a_0.split(":")[0]
+    data_set = second_generator_file.read()
+    data_dict = {}
+    data_list = []
+    for i_1 in range(0, 1000):
+        a = data_set.split("\n")[i_1]
+        b, c, d = a.split("[")
+        data_dict[str(d)] = str(b)
+    for key in sorted(data_dict):
+        data_list.append("%s:%s" % (key, data_dict[key]))
+    cleaned_paths_file = open('cleaned_paths.txt', 'a')
+    for i_12 in range(0, 502):
+        cleaned_paths_file.writelines(str(data_list[i_12]) + "\n")
+    new_min = data_list[0].split(":")[0]
+    a = float(a_1) - float(new_min)
+    if a >= 0:
+        top_path_founded_clear_file = open('top_path_founded.txt', 'w')
+        top_path_founded_clear_file.write("")
+        top_path_founded_write_file = open('top_path_founded.txt', 'w')
+        top_path_founded_write_file.write(data_list[0])
+        print("new top!")
+
+
 if __name__ == '__main__':
-    gen_creation()
+    sort_clean_up_generation()
     while True:
         chose_number = int(
-            input("1)set points\n2)show points\n3)set path\n4)show paths\n5)start\n6)new generation\n==>"))
+            input(
+                "1)set points\n2)show points\n3)set path\n4)show paths\n5)start\n6)new generation\n7)show top\n==>"))
         if chose_number == 1:
             initializing_points()
         elif chose_number == 2:
@@ -286,4 +368,14 @@ if __name__ == '__main__':
             clear_brackets()
             replacement(2)
         elif chose_number == 6:
-            gen_creation()
+            for i in range(0, 10):
+                gen_generation()
+                sort_clean_up_generation()
+                top_paths_founded()
+                syncing()
+                syncing_edition()
+                replacement(1)
+                clear_brackets()
+                replacement(2)
+        elif chose_number == 7:
+            show_top()
